@@ -117,12 +117,26 @@
                 table.column(7).search(regex, true, false).draw();
             }
 
+            function clearFilter() {
+                table.column(7).search('').draw();
+            }
+
+            var currentFilter = null;
+
             $('.btn-group .btn').on('click', function() {
                 var filter = $(this).data('filter');
                 $('.btn-group .btn').removeClass('active');
-                $(this).addClass('active');
                 
-                filterTable(filter);
+                if (currentFilter === filter) {
+                    // If clicking the same button, clear the filter
+                    clearFilter();
+                    currentFilter = null;
+                } else {
+                    // Apply the new filter
+                    $(this).addClass('active');
+                    filterTable(filter);
+                    currentFilter = filter;
+                }
             });
         });
     </script>
