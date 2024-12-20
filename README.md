@@ -6,7 +6,7 @@ A pagina deve ser responsiva para apresentação nos tablets Fire 7, Fire 8 e Ip
 - **Funcionalidades:** Consulta de horários por sala ou matéria
 - **Linguages:** Python, JavaScript, HTML e CSS
 - **Frameworks:** Flask e ORM Peeweee
-- **Banco de dados:** SQLite e CSV
+- **Banco de dados:** SQLite <sub>futuramente deve ser removido e utilizado somente o pandas passando um [json para receber no datatables](https://datatables.net/examples/data_sources/ajax.html)</sub>
 ## Instalação
 Acesse a pasta horariosFCT via terminal e digite o comando:
 
