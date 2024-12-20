@@ -3,6 +3,9 @@
     padding: 8px;
 }
 
+.btn-group {
+    margin-bottom: 20px;
+}
 
 .highlight-column {
     background-color: rgba(94, 168, 236, 0.534) !important;

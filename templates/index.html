@@ -15,6 +15,16 @@
     <div class="container mt-5">
         <h3 class="mb-4"><i class="bi bi-calendar3"></i> Horários da FCT</h3>
         <h4 id="clock"></h4>
+
+        <div class="btn-group" role="group" aria-label="Filtros de sala">
+            <button type="button" class="btn btn-outline-primary" data-filter="Mini-auditórios">Mini-auditórios</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Salas">Salas</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Labs INF">Labs INF</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Labs Mat-Geo">Labs Mat-Geo</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Labs Prod">Labs Prod</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Labs Transp">Labs Transp</button>
+        </div>
+        
         <table id="scheduleTable" class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -56,7 +66,7 @@
         $(document).ready(function() {
             var table = $('#scheduleTable').DataTable({
                 searchHighlight: true,
-                "dom": 'frtip', //Oculta
+                "dom": 'frtip', //Oculta quantidade visuzalização por pagina
 
                 //ordena a coluna 7(Sala) em ordem crescente
                 "order":[[7, "asc"]],
@@ -70,25 +80,50 @@
                 "pageLength":100,
             });
 
-                // Função para destacar a coluna do dia atual
-                function highlightTodayColumn() {
-                    var today = new Date().getDay();
-                    console.log(today)
-                    var days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-                    var todayName = days[today];
-                    
-                    // Encontra o índice da coluna correspondente ao dia atual
-                    var columnIndex = $('th:contains(' + todayName + ')').index();
-                    
-                    if (columnIndex !== -1) {
-                        // Aplica a classe de destaque à coluna
-                        table.column(columnIndex).nodes().to$().addClass('highlight-column');
-                        $(table.column(columnIndex).header()).addClass('highlight-column');
-                    }
+            // Função para destacar a coluna do dia atual
+            function highlightTodayColumn() {
+                var today = new Date().getDay();
+                console.log(today)
+                var days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                var todayName = days[today];
+                
+                // Encontra o índice da coluna correspondente ao dia atual
+                var columnIndex = $('th:contains(' + todayName + ')').index();
+                
+                if (columnIndex !== -1) {
+                    // Aplica a classe de destaque à coluna
+                    table.column(columnIndex).nodes().to$().addClass('highlight-column');
+                    $(table.column(columnIndex).header()).addClass('highlight-column');
                 }
+            }
 
-                // Chama a função para destacar a coluna
-                highlightTodayColumn();
+            // Chama a função para destacar a coluna
+            highlightTodayColumn();
+
+            // Função para filtrar a tabela
+            var filterLists = {
+                'Salas': ['108', '208', '308', '504', '505', '506', '507', '508'],
+                'Mini-auditórios': ['Terreo', '102', '202', '302', '402', '502'],
+                'Labs INF': ['303', '304', '403', '109'],
+                'Labs Mat-Geo': ['103', '105', '106', '207', '305', '306', '307'],
+                'Labs Prod': ['206', '404', '503A', '503B'],
+                'Labs Transp': ['T02', '203', '204', '205']
+            };
+
+            function filterTable(filter) {
+                var regex = filterLists[filter].map(function(sala) {
+                    return '^' + sala + '$';
+                }).join('|');
+                table.column(7).search(regex, true, false).draw();
+            }
+
+            $('.btn-group .btn').on('click', function() {
+                var filter = $(this).data('filter');
+                $('.btn-group .btn').removeClass('active');
+                $(this).addClass('active');
+                
+                filterTable(filter);
+            });
         });
     </script>
 </body>
