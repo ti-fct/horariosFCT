@@ -42,13 +42,20 @@ Salve o código apertando <kbd>Ctrl</kbd> + <kbd>X</kbd>
 
 Depois digite os comando para inicializar o seviço:
 `sudo systemctl daemon-reload`
+
 `sudo systemctl enable horariofct.service`
+
 `sudo systemctl start horariofct.service`
+
 `sudo systemctl status horariofct.service`
+
 
 ## Utils
 
-Na pasta Utils possui os arquivos para realizar a formatação do arquivo original para uma tabela única
-O arquivo excluiAbas.py deletas as abas 2024-1 Pedidos Externas FCT, 2024-1 Pedidos Ext Samambaia e Todas as turmas FCT
-O arquivo extraiAbasCSV.py extrai as abas da planilha XlSX e transforma cada uma em um CSV dentro da pasta abas_csvs
-O arquivo formataPlanilha.py pega o nome da sala partir do titulo da tabela e cria a coluna sala e remove as linhas em branco onde não possui horario
+Na pasta [Utils](https://github.com/ti-fct/horariosFCT/tree/main/utils) possui os arquivos para realizar a formatação do arquivo original para uma tabela única
+
+O arquivo [excluiAbas.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/excluiAbas.py) deletas as abas 2024-1 Pedidos Externas FCT, 2024-1 Pedidos Ext Samambaia e Todas as turmas FCT
+
+O arquivo [extraiAbasCSV.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/extraiAbasCSV.py) extrai as abas da planilha XlSX e transforma cada uma em um CSV dentro da pasta [abas_csvs](https://github.com/ti-fct/horariosFCT/tree/main/utils/abas_csvs)
+
+O arquivo [formataPlanilha.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/formataPlanilha.py) pega o nome da sala partir do titulo da tabela e cria a coluna sala e remove as linhas em branco onde não possui horário
