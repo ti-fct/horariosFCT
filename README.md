@@ -1,5 +1,6 @@
 # Horarios FCT
-Pagina web que mostra os horários e as salas das matérias ministradas
+Pagina web que mostra os horários e as salas das matérias ministradas.
+
 A pagina deve ser responsiva para apresentação nos tablets Fire 7, Fire 8 e Ipad
 
 - **Objetivo:** Mostrar os horarios de aulas com base na planilha de horarios. A interface deve ser intuitiva, fácil de usar e responsiva.
@@ -8,6 +9,7 @@ A pagina deve ser responsiva para apresentação nos tablets Fire 7, Fire 8 e Ip
 
 ## Instalação
 Neste nova versão o local de hospedagem do site foi transferido para o GitHub Pages, uma mudança que permite organizar os arquivos CSS e JavaScript de forma independente. Isso não apenas aprimora a estrutura do projeto, mas também facilita a gestão e manutenção do site, trazendo mais clareza e eficiência.
+
 <s>A segunda versão dessa pagina foi feita para ser incorporada no Google Sites, através do link [https://sites.google.com/ufg.br/horarios](https://sites.google.com/ufg.br/horarios)
 
 Depois de criado no Google site deve adicionar o link no submeno na pagina da FCT [https://fct.ufg.br/admin/menus?menu=2843](https://fct.ufg.br/admin/menus?menu=2843)
@@ -22,4 +24,4 @@ Na pasta [Utils](https://github.com/ti-fct/horariosFCT/tree/main/utils) possui o
 
 3. [formataPlanilha.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/formataPlanilha.py) pega o nome da sala partir do titulo da tabela e cria a coluna sala e remove as linhas em branco onde não possui horário
 
-4. [formataCSV.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/formataCSV.py) gera um arquivo no bloco de notas para ser copiado de colado no index.html na parte do script dentro do `data`
+4. [formataCSV.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/formataCSV.py) gera um arquivo no bloco de notas com os dados para serem copiados dentro do arquivo [js/dados.js](https://github.com/ti-fct/horariosFCT/blob/main/js/dados.js) na parte `var dados = []` e apague a primeira linha onde contem o cabeçalho.
