@@ -7,10 +7,11 @@ A pagina deve ser responsiva para apresentação nos tablets Fire 7, Fire 8 e Ip
 - **Linguages:** Python, JavaScript, HTML e CSS
 
 ## Instalação
-A segunda versão dessa pagina foi feita para ser incorporada no Google Sites, através do link [https://sites.google.com/ufg.br/horarios](https://sites.google.com/ufg.br/horarios)
+Neste nova versão o local de hospedagem do site foi transferido para o GitHub Pages, uma mudança que permite organizar os arquivos CSS e JavaScript de forma independente. Isso não apenas aprimora a estrutura do projeto, mas também facilita a gestão e manutenção do site, trazendo mais clareza e eficiência.
+<s>A segunda versão dessa pagina foi feita para ser incorporada no Google Sites, através do link [https://sites.google.com/ufg.br/horarios](https://sites.google.com/ufg.br/horarios)
 
 Depois de criado no Google site deve adicionar o link no submeno na pagina da FCT [https://fct.ufg.br/admin/menus?menu=2843](https://fct.ufg.br/admin/menus?menu=2843)
-
+</s>
 ## Utils
 
 Na pasta [Utils](https://github.com/ti-fct/horariosFCT/tree/main/utils) possui os arquivos para realizar a formatação do arquivo original para uma tabela única
