@@ -1,3 +1,7 @@
+body{
+    margin: 36px;
+}
+
 .container.mt-5 {
     margin-top: 0rem !important;
     max-width: 98%;
