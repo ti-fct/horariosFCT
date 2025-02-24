@@ -2,6 +2,13 @@ body{
     margin: 36px;
 }
 
+.ui-autocomplete {
+    z-index: 9999 !important;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .container.mt-5 {
     margin-top: 0rem !important;
     max-width: 98%;
