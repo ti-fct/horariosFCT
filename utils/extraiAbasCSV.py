@@ -14,7 +14,7 @@ def salvar_abas_como_csv(arquivo_excel, diretorio_saida):
     df.to_csv(f"{diretorio_saida}/{sheetname}.csv", index=False)
 
 # Exemplo de uso:
-arquivo_excel = '2024-2-Disciplinas e Salas - FCT.xlsx'
+arquivo_excel = 'FINAL 2025-1-Distribuição de Salas-FCT_Mat_Prod_Trans.xlsx'
 diretorio_saida = 'abas_csvs'
 
 salvar_abas_como_csv(arquivo_excel, diretorio_saida)

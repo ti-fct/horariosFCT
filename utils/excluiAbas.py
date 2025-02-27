@@ -17,7 +17,7 @@ def excluir_abas(arquivo, abas_a_excluir):
   wb.save(arquivo)
 
 # Exemplo de uso:
-arquivo_excel = '2024-2-Disciplinas e Salas - FCT.xlsx'  # Substitua pelo caminho do seu arquivo
-abas_para_excluir = [6, 7, 8]  # Ajustar os índices de acordo com as abas desejadas
+arquivo_excel = 'FINAL 2025-1-Distribuição de Salas-FCT_Mat_Prod_Trans.xlsx'  # Substitua pelo caminho do seu arquivo
+abas_para_excluir = [7, 8]  # Ajustar os índices de acordo com as abas desejadas
 
 excluir_abas(arquivo_excel, abas_para_excluir)
