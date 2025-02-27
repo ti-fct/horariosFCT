@@ -128,10 +128,10 @@ $(document).ready(function() {
     // Função para filtrar a tabela
     var filterLists = {
         'Salas': ['108', '208', '308', '504', '505', '506', '507', '508'],
-        'Mini-auditórios': ['Terreo', '102', '202', '302', '402', '502'],
+        'Mini-auditórios': ['MINI-AUDITÓRIO','Terreo', '102', '202', '302', '402', '502'],
         'Labs INF': ['303', '304', '403', '109'],
         'Labs Mat-Geo': ['103', '105', '106', '207', '305', '306', '307'],
-        'Labs Prod': ['206', '404', '503A', '503B'],
+        'Labs Prod': ['206', '404', '503A', '503B','503A e B'],
         'Labs Transp': ['T02', '203', '204', '205']
     };
 
