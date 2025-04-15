@@ -38,22 +38,40 @@ else:
 #______________________________________________________________________________
 
 # Ler o arquivo CSV
-with open('resultado_final.csv', 'r', encoding="utf8") as file:
-    reader = csv.reader(file)
-    data = []
-    for row in reader:
-        # Adicionar cada linha do CSV como uma lista na estrutura de dados
-        data.append(row)
-
-# Ajustar o formato da primeira coluna (horário)
-for i in range(len(data)):
-    data[i][0] = data[i][0].replace(',', '')
-
-
-# Escrever a estrutura de dados em um arquivo .txt
-with open('dados.txt', 'w', encoding="utf8") as file:
-    for row in data:
-        #file.write('\t'.join(row) + '\n')
-        file.write(str(row) + ','  + '\n')
-
-print("Prontinho... Abra o arquivo dados.txt copie tudo e cole dentro do arquivo js\dados.js apague a linha do cabeçalho onde tem os dias da semana")
+try:
+    dados = []
+    with open('resultado_final.csv', 'r', encoding='utf-8') as arquivo:
+        leitor_csv = csv.reader(arquivo)
+        for linha in leitor_csv:
+            dados.append(linha)
+    
+    # Remove a primeira linha (cabeçalho)
+    if len(dados) > 0:
+        dados = dados[1:]
+    
+    # Cria o arquivo dados.js
+    with open('..\js\dados.js', 'w', encoding='utf-8') as arquivo:
+        arquivo.write('var dados = [\n')
+        
+        for i, linha in enumerate(dados):
+            # Formata cada linha como uma lista JavaScript
+            elementos_formatados = []
+            for elemento in linha:
+                # Escapa aspas simples no conteúdo e formata como string JavaScript
+                elemento_escapado = str(elemento).replace("'", "\\'")
+                elementos_formatados.append(f"'{elemento_escapado}'")
+            
+            linha_formatada = '[' + ', '.join(elementos_formatados) + ']'
+            
+            # Adiciona vírgula no final de cada linha, exceto na última
+            if i < len(dados) - 1:
+                linha_formatada += ','
+            
+            arquivo.write(linha_formatada + '\n')
+        
+        arquivo.write('];\n')
+    
+    print("Processamento concluído com sucesso!")
+    
+except Exception as e:
+    print(f"Ocorreu um erro durante o processamento: {e}")
