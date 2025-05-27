@@ -17,11 +17,11 @@ HORARIO,SEGUNDA,TERÇA,QUARTA,QUINTA,SEXTA,SÁBADO,SALA
 10h00-10h50,PROBABILIDADE E ESTATISTICA - PG,ÉTICA E SOCIOLOGIA - TA - PTG,PROBABILIDADE E ESTATISTICA - PG,,Mecânica Aplicada,,208
 10h50-11h40,PROBABILIDADE E ESTATISTICA - PG,ÉTICA E SOCIOLOGIA - TA - PTG,PROBABILIDADE E ESTATISTICA - PG,,Mecânica Aplicada,,208
 12h00-13h00,,,,,,,208
-13h10-14h00,CÁLCULO 2A - reoferta,ÉTICA E SOCIOLOGIA - TA - PTG,CÁLCULO 2A - reoferta,,CÁLCULO 2A - reoferta,,208
-14h00-14h50,CÁLCULO 2A - reoferta,ÉTICA E SOCIOLOGIA - TA - PTG,CÁLCULO 2A - reoferta,,CÁLCULO 2A - reoferta,,208
-15h00-16h00,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,,208
-16h00-16h50,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,,208
-16h50-17h40,,,,,,,208
+13h10-14h00,CÁLCULO 2A - reoferta,ÉTICA E SOCIOLOGIA - TA - PTG,CÁLCULO 2A - reoferta,Semana da Geologia 29/05,CÁLCULO 2A - reoferta,,208
+14h00-14h50,CÁLCULO 2A - reoferta,ÉTICA E SOCIOLOGIA - TA - PTG,CÁLCULO 2A - reoferta,Semana da Geologia 29/05,CÁLCULO 2A - reoferta,,208
+15h00-16h00,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,Semana da Geologia 29/05,CÁLCULO 1A - TC ,,208
+16h00-16h50,CÁLCULO 1A - TC ,,CÁLCULO 1A - TC ,Semana da Geologia 29/05,CÁLCULO 1A - TC ,,208
+16h50-17h40,,,,Semana da Geologia 29/05,,,208
 18h00-18h50,,,,,,,208
 07h00-08h00,,,,,,,308
 08h00-08h50,CIENCIA DOS MATERIAIS 2,,CIENCIA DOS MATERIAIS 2,,,,308
@@ -29,11 +29,11 @@ HORARIO,SEGUNDA,TERÇA,QUARTA,QUINTA,SEXTA,SÁBADO,SALA
 10h00-10h50,CÁLCULO 3A,Metodologia Científica - OBG,CÁLCULO 3A,,Introdução a Eng de Produção,,308
 10h50-11h40,CÁLCULO 3A,Metodologia Científica - OBG,CÁLCULO 3A,,Introdução a Eng de Produção,,308
 12h00-13h00,,,,,,,308
-13h10-14h00,CÁLCULO 3B,"Geografia, Transporte e Sociedade - OBG",CÁLCULO 3B,,Introdução a Eng de Produção,,308
-14h00-14h50,CÁLCULO 3B,"Geografia, Transporte e Sociedade - OBG",CÁLCULO 3B,,Introdução a Eng de Produção,,308
-15h00-16h00,,"Geografia, Transporte e Sociedade - OBG",Introdução à Economia,,Introdução à Economia,,308
-16h00-16h50,,"Geografia, Transporte e Sociedade - OBG",Introdução à Economia,,Introdução à Economia,,308
-16h50-17h40,,,,,,,308
+13h10-14h00,CÁLCULO 3B,"Geografia, Transporte e Sociedade - OBG",CÁLCULO 3B,Semana da Geologia 29/05,Introdução a Eng de Produção,,308
+14h00-14h50,CÁLCULO 3B,"Geografia, Transporte e Sociedade - OBG",CÁLCULO 3B,Semana da Geologia 29/05,Introdução a Eng de Produção,,308
+15h00-16h00,,"Geografia, Transporte e Sociedade - OBG",Introdução à Economia,Semana da Geologia 29/05,Introdução à Economia,,308
+16h00-16h50,,"Geografia, Transporte e Sociedade - OBG",Introdução à Economia,Semana da Geologia 29/05,Introdução à Economia,,308
+16h50-17h40,,,,Semana da Geologia 29/05,,,308
 18h00-18h50,,,,,,,308
 07h00-08h00,,,,,,,504
 08h00-08h50,FÍSICA I - reoferta,FÍSICA I - reoferta,FÍSICA I - reoferta,,FÍSICA I - reoferta,,504
@@ -270,10 +270,10 @@ HORARIO,SEGUNDA,TERÇA,QUARTA,QUINTA,SEXTA,SÁBADO,SALA
 10h50-11h40,PPGGEA-AMB CÁRSTICOS - 16/06 e 23/06 -  Symone 12/05/2025,PPGGEA-AMB CÁRSTICOS - 17/06,,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
 12h00-13h00,,,,,,,502
 13h10-14h00,,,,,,,502
-14h00-14h50,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06,,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
-15h00-16h00,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06,,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
-16h00-16h50,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06,,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
-16h50-17h40,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06,,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
+14h00-14h50,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06 - Semana da Geologia 27/05,Semana da Geologia 28/05,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
+15h00-16h00,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06 - Semana da Geologia 27/05,Semana da Geologia 28/05,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
+16h00-16h50,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06 - Semana da Geologia 27/05,Semana da Geologia 28/05,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
+16h50-17h40,PPGGEA-AMB CÁRSTICOS - 16/05 e 16/06 ,PPGGEA-AMB CÁRSTICOS - 17/06 - Semana da Geologia 27/05,Semana da Geologia 28/05,,PPGGEA-AGROGEOLOGIA-20/06-ROCHAS ORNAMENTAIS-23 e 30/05,PPGGEA-R. ORN. - 24 e 31/05,502
 18h00-18h50,,,,,,,502
 07h00-08h00,,,,,,,303
 08h00-08h50,Sist. de Informação - TA  (até solução ar condicionado),,Sist. de Informação - TA  (até solução ar condicionado),INTRO A COMPUTAÇAO - TA - P,,,303
