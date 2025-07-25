@@ -1,36 +1,36 @@
 # Horarios FCT
-Pagina web que mostra os horários e as salas das matérias ministradas.
+Página web responsiva que exibe os horários e salas das disciplinas ministradas na FCT. O sistema foi projetado para ser intuitivo, fácil de usar e otimizado para dispositivos como tablets Fire 7, Fire 8 e iPad.
 
-A pagina deve ser responsiva para apresentação nos tablets Fire 7, Fire 8 e Ipad
-
-- **Objetivo:** Mostrar os horarios de aulas com base na planilha de horarios. A interface deve ser intuitiva, fácil de usar e responsiva.
-- **Funcionalidades:** Consulta de horários por sala ou matéria
-- **Linguages:** Python, JavaScript, HTML e CSS
-
+## Funcionalidades
+- Consulta de horários por sala ou disciplina.
+- Interface responsiva, adaptada para tablets (Fire 7, Fire 8, iPad) e outros dispositivos.
+- Atualização automática de dados a partir de planilhas CSV, com importação direta para o GitHub.
+- Comparação automática de planilhas para atualização apenas quando necessário.
+- Execução simplificada por meio de um único script Python, compatível com automação via Cron no Linux.
+## Tecnologias Utilizadas
+- Linguagens: Python, JavaScript, HTML, CSS
+- Hospedagem: GitHub Pages, Google Sites
+- Automação: Script Python com integração ao GitHub e suporte ao Cron
 ## Instalação
-Neste nova versão o local de hospedagem do site foi transferido para o [GitHub Pages](https://ti-fct.github.io/horariosFCT/), uma mudança que permite organizar os arquivos CSS e JavaScript de forma independente. Isso não apenas aprimora a estrutura do projeto, mas também facilita a gestão e manutenção do site, trazendo mais clareza e eficiência.
+A página está hospedada no GitHub Pages, o que permite uma organização independente e eficiente dos arquivos CSS, JavaScript e HTML. Essa mudança melhora a manutenção do projeto e garante maior clareza na estrutura do código.
 
-<s>A segunda versão dessa pagina foi feita para ser incorporada no Google Sites, através do link [https://sites.google.com/ufg.br/horarios](https://sites.google.com/ufg.br/horarios)
+### Passos para Configuração
+1. Clone o repositório: git clone `https://github.com/ti-fct/horariosFCT.git`
+2. Certifique-se de que o ambiente Python está configurado com as dependências necessárias (listadas em `requirements.txt`).
+3. Execute o script principal (`main.py`) para processar a planilha de horários e atualizar os dados.
+4. Configure o Cron (no Linux) para automação, se desejar. 
+    - Abra o terminal e digite o seguinte comando `crontab -e` 
+    - e adicione o seguinte código no final ```00 07 * * *python3 /caminho/para/Horarios_Salas_Combinados.py```
 
-Depois de criado no Google site deve adicionar o link no submeno na pagina da FCT [https://fct.ufg.br/admin/menus?menu=2843](https://fct.ufg.br/admin/menus?menu=2843)
-</s>
-## Utils
+
+> [!NOTE]
+> A versão anterior dependia do Google Colab e de múltiplos scripts. Agora, um único script gerencia todo o processo, com importação automática de arquivos CSV para o GitHub.
+
+
 > [!WARNING]
 > Antes de baixar os dados, verifique se os títulos das salas seguem o mesmo padrão com um espaço, um traço, um espaço, SALA.
-![Ponto de atenção antes de iniciar os passos](https://github.com/ti-fct/horariosFCT/blob/main/utils/pontoDeAtencao.png)
+![Ponto de atenção antes de iniciar os passos](https://github.com/ti-fct/horariosFCT/blob/main/images/pontoDeAtencao.png)
 > Verifique se os nomes das salas são os mesmos do filtro
-![Ponto de atenção antes de iniciar os passos](https://github.com/ti-fct/horariosFCT/blob/main/utils/pontoDeAtencaoFiltros.png)
-
-
-Na pasta [Utils](https://github.com/ti-fct/horariosFCT/tree/main/utils), estão os arquivos para formatar o arquivo original em uma tabela única. 
-É importante seguir o passo a passo na sequência.
-
-1. [excluiAbas.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/excluiAbas.py) deletas as abas 2024-1 Pedidos Externas FCT, 2024-1 Pedidos Ext Samambaia e Todas as turmas FCT
-Na utima atualização da planilha não foi necessário fazer este passo.
-
-2. [extraiAbasCSV.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/extraiAbasCSV.py) extrai as abas da planilha XlSX e transforma cada uma em um CSV dentro da pasta [abas_csvs](https://github.com/ti-fct/horariosFCT/tree/main/utils/abas_csvs)
-
-
-3. [formataPlanilha.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/formataPlanilha.py) pega o nome da sala partir do titulo da tabela e cria a coluna sala e remove as linhas em branco onde não possui horário
-
-4. [juntaFormataCSV.py](https://github.com/ti-fct/horariosFCT/blob/main/utils/juntaFormataCSV.py) junta os arquivos CVSs que estão na pasta [abas_csvs_editados](https://github.com/ti-fct/horariosFCT/blob/main/utils/abas_csvs_editados) gera um arquivo resultado_final.csv para visulizar melhor e conferir os dados e também gera um arquivo no bloco de notas com os dados para serem copiados dentro do arquivo [js/dados.js](https://github.com/ti-fct/horariosFCT/blob/main/js/dados.js), na parte `var dados = []` e apague a primeira linha onde contem o cabeçalho com os dias da semana.
+![Ponto de atenção antes de iniciar os passos](https://github.com/ti-fct/horariosFCT/blob/main/images/pontoDeAtencaoFiltros.png)
+> Em caso de erro verifique a quantidade de colunas
+![Ponto de atenção antes de iniciar os passos](https://github.com/ti-fct/horariosFCT/blob/main/images/excluirColunas.png)
