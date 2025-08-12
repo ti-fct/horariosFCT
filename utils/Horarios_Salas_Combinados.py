@@ -11,7 +11,7 @@ import Send_to_Github
 # --- Configurações ---
 SERVICE_ACCOUNT_FILE = 'service_account.json'
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-FILE_ID = '1kcimnmHy4w7gY1nZu37lx6mlditiu4UC'
+FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
 SHEET_NAMES = [
     "MINI-AUDITORIOS",
     "SALAS",
