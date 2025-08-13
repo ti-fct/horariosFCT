@@ -7,6 +7,7 @@ Página web responsiva que exibe os horários e salas das disciplinas ministrada
 - Atualização automática de dados a partir de planilhas CSV, com importação direta para o GitHub.
 - Comparação automática de planilhas para atualização apenas quando necessário.
 - Execução simplificada por meio de um único script Python, compatível com automação via Cron no Linux.
+- Monitoramento de erros através de um módulo de log dedicado
 ## 🛠️ Tecnologias Utilizadas
 - Linguagens: Python, JavaScript, HTML, CSS
 - Hospedagem: GitHub Pages, Google Sites
@@ -23,12 +24,13 @@ A página está hospedada no GitHub Pages, o que permite uma organização indep
 4. Configure o Cron (no Linux) para automação, se desejar. 
     - Abra o terminal e digite o seguinte comando `crontab -e` 
     - Adicione o seguinte código no final
-      ```Bash
-          00 07 * * *python3 /caminho/para/horariosFCT/utils/Horarios_Salas_Combinados.py
-      
+      ```bash
+          00 07 * * *python3 /caminho/para/horariosFCT/utils/main.py
+      ```
 
 > [!NOTE]
-> Caso seja necessário executar o script fora do horário previamente agendado e não seja possível acessar o servidor, é possível realizá-lo por meio do Google Colab, acessando o seguinte link: [https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK](https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK). Ressalta-se que apenas os colaboradores da FCT/TI possuem permissão para essa execução.
+> Caso seja necessário executar o script fora do horário previamente agendado e não seja possível acessar o servidor, é possível realizá-lo por meio do Google Colab, acessando o seguinte link: [https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK](https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK)
+> Ressalta-se que apenas os colaboradores da FCT/TI possuem permissão para essa execução.
 
 
 > [!WARNING]
