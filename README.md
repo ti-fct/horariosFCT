@@ -16,7 +16,7 @@ A página está hospedada no GitHub Pages, o que permite uma organização indep
 
 ### 🧭 Passos para Configuração
 1. Clone o repositório: `git clone https://github.com/ti-fct/horariosFCT.git`
-2. Certifique-se de que o ambiente Python está configurado com as dependências necessárias (listadas em `requirements.txt`).
+2. Certifique-se de que o ambiente Python está configurado com as dependências necessárias listadas em [requirements.txt](https://github.com/ti-fct/horariosFCT/blob/main/utils/requirements.txt).
     - Acesse o repositório clonado depois acesse a pasta `utils` e digite o seguinte comando:
     - `pip install -r requirements.txt`
 3. Execute o script principal (`main.py`) para processar a planilha de horários e atualizar os dados.
