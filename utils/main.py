@@ -117,6 +117,45 @@ def process_excel_sheet(sheet, sheet_name):
 
     return pd.DataFrame(all_room_data)
 
+# --- Formata CSV para um arquivo js que pode ser utilizado no DataTables ---
+
+def format_csv_to_js(csv_path, js_output_path):
+    import csv
+
+    try:
+        dados = []
+        with open(csv_path, 'r', encoding='utf-8') as arquivo:
+            leitor_csv = csv.reader(arquivo)
+            for linha in leitor_csv:
+                dados.append(linha)
+
+        # Remove o cabeçalho
+        if len(dados) > 0:
+            dados = dados[1:]
+
+        with open(js_output_path, 'w', encoding='utf-8') as arquivo:
+            arquivo.write('var dados = [\n')
+
+            for i, linha in enumerate(dados):
+                elementos_formatados = []
+                for elemento in linha:
+                    elemento_escapado = str(elemento).replace("'", "\\'")
+                    elementos_formatados.append(f"'{elemento_escapado}'")
+
+                linha_formatada = '[' + ', '.join(elementos_formatados) + ']'
+                if i < len(dados) - 1:
+                    linha_formatada += ','
+
+                arquivo.write(linha_formatada + '\n')
+
+            arquivo.write('];\n')
+
+        print("Arquivo dados.js gerado com sucesso.")
+
+    except Exception as e:
+        print(f"Erro ao gerar o arquivo JS: {e}")
+
+
 # --- Lógica Principal ---
 
 if __name__ == "__main__":
@@ -156,9 +195,14 @@ if __name__ == "__main__":
                     combined_df.to_csv(output_csv_file, index=False)
 
                     print(f"\nDados combinados salvos em {output_csv_file}")
+
+                    # 7.1. Gerar o arquivo dados.js a partir do CSV
+                    js_output_path = os.path.join('..', 'js', 'dados.js')
+                    format_csv_to_js(output_csv_file, js_output_path)
                     
                     # Envia para o GitHub
                     Send_to_Github.upload_to_github(output_csv_file, 'ti-fct', 'horariosFCT', 'main', 'utils/'+output_csv_file)
+                    Send_to_Github.upload_to_github(js_output_path, 'ti-fct', 'horariosFCT', 'main', 'js/'+js_output_path)
                     
                     # 8. Substituir o arquivo antigo pelo novo
                     if os.path.exists(OLD_EXCEL_PATH):
