@@ -7,11 +7,19 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import openpyxl
 import Send_to_Github
+import logging
 
 # --- Configurações ---
 SERVICE_ACCOUNT_FILE = 'service_account.json'
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
+
+logging.basicConfig(filename='/home/suporte/horariosFCT/utils/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def enviar_mensagem_erro(mensagem):
+    print(mensagem) 
+    logging.error(mensagem+'\n', exc_info=True)
+
 SHEET_NAMES = [
     "MINI-AUDITORIOS",
     "SALAS",
@@ -28,13 +36,13 @@ OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
 
 def authenticate_google_drive():
     try:
-        credentials = service_account.Credentials.from_service_account_file(
+        credentials = service_account.Credentials.from_service_account_fileeee(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
         service = build('drive', 'v3', credentials=credentials)
         print("Autenticação com o Google Drive bem-sucedida.")
         return service
     except Exception as e:
-        print(f"Erro na autenticação com o Google Drive: {e}")
+        enviar_mensagem_erro(f"Erro na autenticação com o Google Drive: {e}")
         return None
     
 # --- Função de Download do Arquivo Excel ---
@@ -51,7 +59,7 @@ def download_excel_from_drive(service, file_id, destination_path):
         print(f"Arquivo baixado para: {destination_path}")
         return True
     except Exception as e:
-        print(f"Erro ao baixar o arquivo do Google Drive: {e}")
+        enviar_mensagem_erro(f"Erro ao baixar o arquivo do Google Drive: {e}")
         return False
 
 # --- Função de Comparação de Arquivos ---
@@ -153,7 +161,7 @@ def format_csv_to_js(csv_path, js_output_path):
         print("Arquivo dados.js gerado com sucesso.")
 
     except Exception as e:
-        print(f"Erro ao gerar o arquivo JS: {e}")
+        enviar_mensagem_erro(f"Erro ao gerar o arquivo JS: {e}")
 
 
 # --- Lógica Principal ---
@@ -211,7 +219,7 @@ if __name__ == "__main__":
                     print(f"Arquivo antigo atualizado: {OLD_EXCEL_PATH}")
 
                 except Exception as e:
-                    print(f"Erro ao processar o arquivo Excel: {e}")
+                    enviar_mensagem_erro(f"Erro ao processar o arquivo Excel: {e}")
                     # Não remove o arquivo baixado em caso de erro para evitar perda de dados
             else:
                 print("Nenhuma alteração detectada. O script não será executado.")
@@ -220,6 +228,6 @@ if __name__ == "__main__":
                     os.remove(CURRENT_EXCEL_PATH)
                     print(f"Arquivo temporário '{CURRENT_EXCEL_PATH}' removido.")
         else:
-            print("Não foi possível baixar o arquivo Excel. O processamento foi interrompido.")
+            enviar_mensagem_erro("Não foi possível baixar o arquivo Excel. O processamento foi interrompido.")
     else:
-        print("Não foi possível autenticar com o Google Drive. O processamento foi interrompido.")
+        enviar_mensagem_erro("Não foi possível autenticar com o Google Drive. O processamento foi interrompido.")
