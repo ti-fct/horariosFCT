@@ -17,17 +17,18 @@ A página está hospedada no GitHub Pages, o que permite uma organização indep
 ### 🧭 Passos para Configuração
 1. Clone o repositório: `git clone https://github.com/ti-fct/horariosFCT.git`
 2. Certifique-se de que o ambiente Python está configurado com as dependências necessárias (listadas em `requirements.txt`).
+    - Acesse o repositório clonado depois acesse a pasta `utils` e digite o seguinte comando:
+    - `pip install -r requirements.txt`
 3. Execute o script principal (`main.py`) para processar a planilha de horários e atualizar os dados.
 4. Configure o Cron (no Linux) para automação, se desejar. 
     - Abra o terminal e digite o seguinte comando `crontab -e` 
     - Adicione o seguinte código no final
       ```Bash
-          00 07 * * *python3 /caminho/para/Horarios_Salas_Combinados.py
-      ```
+          00 07 * * *python3 /caminho/para/horariosFCT/utils/Horarios_Salas_Combinados.py
       
 
 > [!NOTE]
-> A versão anterior dependia do Google Colab e de múltiplos scripts. Agora, um único script gerencia todo o processo, com importação automática de arquivos CSV para o GitHub.
+> Caso seja necessário executar o script fora do horário previamente agendado e não seja possível acessar o servidor, é possível realizá-lo por meio do Google Colab, acessando o seguinte link: [https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK](https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK). Ressalta-se que apenas os colaboradores da FCT/TI possuem permissão para essa execução.
 
 
 > [!WARNING]
