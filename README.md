@@ -30,6 +30,7 @@ A página está hospedada no GitHub Pages, o que permite uma organização indep
 
 > [!NOTE]
 > Caso seja necessário executar o script fora do horário previamente agendado e não seja possível acessar o servidor, é possível realizá-lo por meio do Google Colab, acessando o seguinte link: [https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK](https://colab.research.google.com/drive/1JnluPbjkjxHV208KKBfIhtT0-QFpiPqK)
+> 
 > Ressalta-se que apenas os colaboradores da FCT/TI possuem permissão para essa execução.
 
 

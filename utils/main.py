@@ -6,8 +6,9 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import openpyxl
-import Send_to_Github
 import logging
+import Send_to_Github
+import Send_to_GoogleChat
 
 # --- Configurações ---
 SERVICE_ACCOUNT_FILE = 'service_account.json'
@@ -19,6 +20,7 @@ logging.basicConfig(filename='/home/suporte/horariosFCT/utils/logs.txt', level=l
 def enviar_mensagem_erro(mensagem):
     print(mensagem) 
     logging.error(mensagem+'\n', exc_info=True)
+    Send_to_GoogleChat.alert_erro(mensagem)
 
 SHEET_NAMES = [
     "MINI-AUDITORIOS",
@@ -36,7 +38,7 @@ OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
 
 def authenticate_google_drive():
     try:
-        credentials = service_account.Credentials.from_service_account_fileeee(
+        credentials = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
         service = build('drive', 'v3', credentials=credentials)
         print("Autenticação com o Google Drive bem-sucedida.")
@@ -208,10 +210,13 @@ if __name__ == "__main__":
                     js_output_path = os.path.join('..', 'js', 'dados.js')
                     format_csv_to_js(output_csv_file, js_output_path)
                     
+                    js_filename = os.path.basename(js_output_path)
+                    github_js_path = f"js/{js_filename}"
+
                     # Envia para o GitHub
                     Send_to_Github.upload_to_github(output_csv_file, 'ti-fct', 'horariosFCT', 'main', 'utils/'+output_csv_file)
-                    Send_to_Github.upload_to_github(js_output_path, 'ti-fct', 'horariosFCT', 'main', 'js/'+js_output_path)
-                    
+                    Send_to_Github.upload_to_github(js_output_path, 'ti-fct', 'horariosFCT', 'main', github_js_path)
+
                     # 8. Substituir o arquivo antigo pelo novo
                     if os.path.exists(OLD_EXCEL_PATH):
                         os.remove(OLD_EXCEL_PATH)

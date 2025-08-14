@@ -1,23 +1,21 @@
 import os
 from dotenv import load_dotenv
 from github import Github, GithubException
+import logging
 
-CREDENTIALS_FILE = 'service_account.json'
-OUTPUT_CSV_FILENAME = 'Horarios_Salas_Combinados.csv'
+logging.basicConfig(filename='/home/suporte/horariosFCT/utils/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Configurações do GitHub ---
-load_dotenv()
+load_dotenv(dotenv_path='.env')
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_OWNER = 'ti-fct'
 GITHUB_REPO_NAME = 'horariosFCT'
 GITHUB_BRANCH = 'main'
-GITHUB_FILE_PATH = 'utils/'+OUTPUT_CSV_FILENAME
-
 
 def upload_to_github(file_path, owner, repo_name, branch, github_file_path):
 
     if not GITHUB_TOKEN:
-        print("Erro: GITHUB_TOKEN não encontrado nas variáveis de ambiente.")
+        logging.error("Erro: GITHUB_TOKEN não encontrado nas variáveis de ambiente.")
         return False
     
     g = Github(GITHUB_TOKEN)
@@ -25,16 +23,16 @@ def upload_to_github(file_path, owner, repo_name, branch, github_file_path):
     try:
         repo = g.get_repo(f"{owner}/{repo_name}")
     except GithubException as e:
-        print(f"Erro ao acessar o repositório '{owner}/{repo_name}': {e}")
-        print("Verifique se o nome do repositório/proprietário está correto e se o token tem permissões adequadas.")
+        logging.error(f"Erro ao acessar o repositório '{owner}/{repo_name}': {e}")
+        logging.error("Verifique se o nome do repositório/proprietário está correto e se o token tem permissões adequadas.")
         return False
     except Exception as e:
-        print(f"Erro inesperado ao obter repositório: {e}")
+        logging.error(f"Erro inesperado ao obter repositório: {e}")
         return False
 
     # Verifica se o arquivo existe antes de tentar lê-lo
     if not os.path.exists(file_path):
-        print(f"Erro: Arquivo '{file_path}' não encontrado.")
+        logging.error(f"Erro: Arquivo '{file_path}' não encontrado.")
         return False
 
     with open(file_path, 'rb') as f:
@@ -52,9 +50,9 @@ def upload_to_github(file_path, owner, repo_name, branch, github_file_path):
             repo.create_file(github_file_path, commit_message, content, branch=branch)
             print(f"Arquivo '{github_file_path}' criado com sucesso no GitHub!")
         else:
-            print(f"Erro do GitHub ao enviar arquivo: {e.status} - {e.data}")
+            logging.error(f"Erro ao enviar arquivo para o GitHub: {e.status} - {e.data}")
             return False
     except Exception as e:
-        print(f"Erro inesperado ao enviar arquivo para o GitHub: {e}")
+        logging.error(f"Erro inesperado ao enviar arquivo para o GitHub: {e}")
         return False
     return True
