@@ -19,7 +19,7 @@ logging.basicConfig(filename='/home/suporte/horariosFCT/utils/logs.txt', level=l
 
 def enviar_mensagem_erro(mensagem):
     print(mensagem) 
-    logging.error(mensagem+'\n', exc_info=True)
+    logging.error(mensagem+'\n', exc_info=False)
     Send_to_GoogleChat.alert_erro(mensagem)
 
 SHEET_NAMES = [
@@ -40,7 +40,7 @@ def authenticate_google_drive():
     try:
         credentials = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        service = build('drive', 'v3', credentials=credentials)
+        service = build('drive', 'v3', credentials=credentials, cache_discovery=False)
         print("Autenticação com o Google Drive bem-sucedida.")
         return service
     except Exception as e:
@@ -91,6 +91,7 @@ def process_excel_sheet(sheet, sheet_name):
     all_room_data = []
     sheet_data = []
     for row in sheet.iter_rows(values_only=True):
+        # Garante que todas as células são strings e remove espaços em branco
         sheet_data.append([str(cell if cell is not None else '').strip() for cell in row])
 
     room_indices = [0, 16, 32, 48, 64, 80, 96, 112]
@@ -109,21 +110,22 @@ def process_excel_sheet(sheet, sheet_name):
             pass
 
         if current_room_name and i >= start_data_row:
-            if len(row_values) > 1 and any(cell for cell in row_values[1:]):
-                time = row_values[0]
-                if not time:
-                    continue
-                row_dict = {
-                    "Horário": time,
-                    "Segunda": row_values[1] if len(row_values) > 1 else "",
-                    "Terça": row_values[2] if len(row_values) > 2 else "",
-                    "Quarta": row_values[3] if len(row_values) > 3 else "",
-                    "Quinta": row_values[4] if len(row_values) > 4 else "",
-                    "Sexta": row_values[5] if len(row_values) > 5 else "",
-                    "Sábado": row_values[6] if len(row_values) > 6 else "",
-                    "Sala": current_room_name
-                }
-                all_room_data.append(row_dict)
+            #if len(row_values) > 1 and any(cell for cell in row_values[1:]):
+                #time_str = row_values[0]
+            time_str = row_values[0]
+            if not time_str:
+                continue
+            row_dict = {
+                "Horário": time_str,
+                "Segunda": row_values[1] if len(row_values) > 1 else "",
+                "Terça": row_values[2] if len(row_values) > 2 else "",
+                "Quarta": row_values[3] if len(row_values) > 3 else "",
+                "Quinta": row_values[4] if len(row_values) > 4 else "",
+                "Sexta": row_values[5] if len(row_values) > 5 else "",
+                "Sábado": row_values[6] if len(row_values) > 6 else "",
+                "Sala": current_room_name
+            }
+            all_room_data.append(row_dict)
 
     return pd.DataFrame(all_room_data)
 
