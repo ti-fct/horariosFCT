@@ -1,0 +1,24 @@
+2025-08-15 07:00:01,981 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'service_account.json'
+
+2025-08-15 07:00:03,252 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-15 08:57:26,227 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-15 08:57:26,722 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
+2025-08-16 07:00:02,891 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'service_account.json'
+
+2025-08-16 07:00:03,847 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-17 07:00:02,152 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'service_account.json'
+
+2025-08-17 07:00:03,625 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-18 07:00:02,048 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'service_account.json'
+
+2025-08-18 07:00:03,199 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-19 07:00:02,666 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'service_account.json'
+
+2025-08-19 07:00:03,881 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-19 09:07:34,628 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-19 09:07:35,139 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
