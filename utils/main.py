@@ -19,6 +19,15 @@ FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
 # Configuração do logging
 logging.basicConfig(filename=BASE_DIR+'/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# --- Configurações do GitHub ---
+GITHUB_OWNER = 'ti-fct'
+GITHUB_REPO_NAME = 'horariosFCT'
+GITHUB_BRANCH = 'main'
+
+# Caminhos para o arquivo atual e o arquivo antigo
+CURRENT_EXCEL_PATH = 'planilha_horarios.xlsx'
+OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
+
 def enviar_mensagem_erro(mensagem):
     print(mensagem) 
     logging.error(mensagem+'\n', exc_info=False)
@@ -32,9 +41,6 @@ SHEET_NAMES = [
     "LABS PROD",
     "LABS TRANSP"
 ]
-# Caminhos para o arquivo atual e o arquivo antigo
-CURRENT_EXCEL_PATH = 'planilha_horarios.xlsx'
-OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
 
 # --- Funções de Autenticação
 
@@ -218,8 +224,8 @@ if __name__ == "__main__":
                     github_js_path = f"js/{js_filename}"
 
                     # Envia para o GitHub
-                    Send_to_Github.upload_to_github(output_csv_file, 'ti-fct', 'horariosFCT', 'main', 'utils/'+output_csv_file)
-                    Send_to_Github.upload_to_github(js_output_path, 'ti-fct', 'horariosFCT', 'main', github_js_path)
+                    Send_to_Github.upload_to_github(output_csv_file, GITHUB_OWNER, GITHUB_REPO_NAME, GITHUB_BRANCH, 'utils/'+output_csv_file)
+                    Send_to_Github.upload_to_github(js_output_path, GITHUB_OWNER, GITHUB_REPO_NAME, GITHUB_BRANCH, github_js_path)
 
                     # 8. Substituir o arquivo antigo pelo novo
                     if os.path.exists(OLD_EXCEL_PATH):

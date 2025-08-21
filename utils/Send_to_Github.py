@@ -3,14 +3,11 @@ from dotenv import load_dotenv
 from github import Github, GithubException
 import logging
 
-logging.basicConfig(filename='/home/suporte/horariosFCT/utils/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=os.path.dirname(os.path.realpath(__file__))+'/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Configurações do GitHub ---
 load_dotenv(dotenv_path='.env')
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
-GITHUB_OWNER = 'ti-fct'
-GITHUB_REPO_NAME = 'horariosFCT'
-GITHUB_BRANCH = 'main'
 
 def upload_to_github(file_path, owner, repo_name, branch, github_file_path):
 
