@@ -22,3 +22,29 @@
 
 2025-08-19 09:07:34,628 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
 2025-08-19 09:07:35,139 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
+2025-08-20 07:00:02,166 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: '/home/utils/service_account.json'
+
+2025-08-20 07:00:03,410 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-21 07:00:02,946 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: '/home/utils/service_account.json'
+
+2025-08-21 07:00:04,032 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-21 08:34:40,526 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-21 08:34:41,041 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
+2025-08-21 09:45:04,571 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: '/home/utils/service_account.json'
+
+2025-08-21 09:45:05,607 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-21 10:01:59,007 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-21 10:01:59,500 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
+2025-08-21 10:04:04,929 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: '/home/utils/service_account.json'
+
+2025-08-21 10:04:05,995 - ERROR - Não foi possível autenticar com o Google Drive. O processamento foi interrompido.
+
+2025-08-21 10:48:02,860 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-21 10:48:03,358 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media
+2025-08-21 10:48:06,478 - ERROR - Erro ao gerar o arquivo JS: [Errno 2] No such file or directory: '../js/dados.js'
+
+2025-08-21 10:50:25,103 - INFO - URL being requested: GET https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+2025-08-21 10:50:25,504 - INFO - URL being requested: GET https://www.googleapis.com/drive/v3/files/1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk?alt=media

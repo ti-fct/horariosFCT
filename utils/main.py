@@ -11,12 +11,13 @@ import Send_to_Github
 import Send_to_GoogleChat
 
 # --- Configurações ---
-BASE_DIR = os.path.abspath(os.pardir)
-SERVICE_ACCOUNT_FILE = BASE_DIR+'/utils/service_account.json'
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+CREDENTIALS_FILE = BASE_DIR+'/service_account.json'
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
 
-logging.basicConfig(filename=BASE_DIR+'/utils/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configuração do logging
+logging.basicConfig(filename=BASE_DIR+'/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def enviar_mensagem_erro(mensagem):
     print(mensagem) 
@@ -40,7 +41,7 @@ OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
 def authenticate_google_drive():
     try:
         credentials = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+            CREDENTIALS_FILE, scopes=SCOPES)
         service = build('drive', 'v3', credentials=credentials, cache_discovery=False)
         print("Autenticação com o Google Drive bem-sucedida.")
         return service
