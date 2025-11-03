@@ -115,7 +115,18 @@ def format_csv_to_js(csv_path, js_output_path):
         with open(js_output_path, 'w', encoding='utf-8') as js_file:
             js_file.write('var dados = [\n')
             for i, row in enumerate(data_list):
-                formatted_row = ', '.join([f"'{str(item).replace('\'', '\\\'')}'" for item in row])
+                # Processa cada item da linha para escapar aspas simples e barras invertidas
+                processed_row = []
+                for item in row:
+                    # 1. Converte para string
+                    # 2. Substitui barras invertidas por duas barras invertidas (escapa a própria barra)
+                    # 3. Substitui aspas simples por uma barra invertida e uma aspa simples (escapa a aspa)
+                    escaped_item = str(item).replace('\\', '\\\\').replace("'", "\\'")
+                    processed_row.append(f"'{escaped_item}'")
+                
+                # Junta os itens processados
+                formatted_row = ', '.join(processed_row)
+                
                 js_file.write(f"  [{formatted_row}]")
                 if i < len(data_list) - 1:
                     js_file.write(',\n')
@@ -129,7 +140,7 @@ def format_csv_to_js(csv_path, js_output_path):
         print(error_msg)
         logging.error(error_msg)
         send_google_chat_notification(f"🚨 Erro na automação de horários: Falha ao converter CSV para JS. Detalhes: {e}")
-
+        
 def main():
     """Função principal para orquestrar o processo."""
     drive_service = authenticate_google_drive()
