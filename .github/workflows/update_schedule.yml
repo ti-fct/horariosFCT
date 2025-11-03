@@ -1,0 +1,51 @@
+name: Atualização Diária dos Horários
+
+on:
+  # Permite acionar o workflow manualmente pela aba "Actions" do GitHub
+  workflow_dispatch:
+
+  # Agenda a execução todos os dias às 07:00 (horário de Brasília, aprox. 10:00 UTC)
+  schedule:
+    - cron: '0 10 * * *'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permissão para o workflow fazer push no repositório
+
+    steps:
+      - name: 1. Clonar o repositório
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: 3. Instalar dependências
+        run: pip install -r utils/requirements.txt
+
+      - name: 4. Criar arquivo de credenciais do Google
+        # Usa um "secret" do GitHub para armazenar o conteúdo do service_account.json de forma segura
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > utils/service_account.json
+
+      - name: 5. Executar script de atualização
+        # Passa o webhook do Google Chat como uma variável de ambiente para o script
+        env:
+          GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+        run: python utils/main.py
+
+      - name: 6. Fazer commit e push das alterações
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          
+          # Adiciona os arquivos que podem ser alterados
+          git add js/dados.js utils/Horarios_Salas_Combinados.csv utils/logs.txt
+          
+          # Faz o commit apenas se houver alterações
+          git diff --staged --quiet || git commit -m "Atualização automática dos horários"
+          
+          # Faz o push das alterações para o repositório
+          git push

@@ -1,130 +1,99 @@
 import pandas as pd
 import io
 import os
-import hashlib
+import openpyxl
+import logging
+import requests
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
-import openpyxl
-import logging
-import Send_to_Github
-import Send_to_GoogleChat
 
 # --- Configurações ---
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-CREDENTIALS_FILE = BASE_DIR+'/service_account.json'
+CREDENTIALS_FILE = os.path.join(BASE_DIR, 'service_account.json')
+LOG_FILE = os.path.join(BASE_DIR, 'logs.txt')
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
+CURRENT_EXCEL_PATH = os.path.join(BASE_DIR, 'planilha_horarios.xlsx')
+
+# Obtenha o webhook do Google Chat das variáveis de ambiente
+GOOGLE_CHAT_WEBHOOK_URL = os.environ.get('GOOGLE_CHAT_WEBHOOK')
 
 # Configuração do logging
-logging.basicConfig(filename=BASE_DIR+'/logs.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# --- Configurações do GitHub ---
-GITHUB_OWNER = 'ti-fct'
-GITHUB_REPO_NAME = 'horariosFCT'
-GITHUB_BRANCH = 'main'
-
-# Caminhos para o arquivo atual e o arquivo antigo
-CURRENT_EXCEL_PATH = 'planilha_horarios.xlsx'
-OLD_EXCEL_PATH = 'planilha_horarios_antiga.xlsx'
-
-def enviar_mensagem_erro(mensagem):
-    print(mensagem) 
-    logging.error(mensagem+'\n', exc_info=False)
-    Send_to_GoogleChat.alert_erro(mensagem)
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 SHEET_NAMES = [
-    "MINI-AUDITORIOS",
-    "SALAS",
-    "LABS INF-DES FCT",
-    "LABS MAT-GEO",
-    "LABS PROD",
-    "LABS TRANSP"
+    "MINI-AUDITORIOS", "SALAS", "LABS INF-DES FCT", "LABS MAT-GEO",
+    "LABS PROD", "LABS TRANSP"
 ]
 
-# --- Funções de Autenticação
+def send_google_chat_notification(message):
+    """Envia uma notificação para o Google Chat."""
+    if not GOOGLE_CHAT_WEBHOOK_URL:
+        print("Webhook do Google Chat não configurado. Pulando notificação.")
+        logging.warning("Webhook do Google Chat não configurado.")
+        return
+    try:
+        payload = {'text': message}
+        requests.post(GOOGLE_CHAT_WEBHOOK_URL, json=payload)
+    except Exception as e:
+        print(f"Erro ao enviar mensagem para o Google Chat: {e}")
+        logging.error(f"Erro ao enviar mensagem para o Google Chat: {e}")
 
 def authenticate_google_drive():
+    """Autentica com a API do Google Drive."""
     try:
-        credentials = service_account.Credentials.from_service_account_file(
-            CREDENTIALS_FILE, scopes=SCOPES)
-        service = build('drive', 'v3', credentials=credentials, cache_discovery=False)
+        creds = service_account.Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
+        service = build('drive', 'v3', credentials=creds, cache_discovery=False)
         print("Autenticação com o Google Drive bem-sucedida.")
+        logging.info("Autenticação com o Google Drive bem-sucedida.")
         return service
     except Exception as e:
-        enviar_mensagem_erro(f"Erro na autenticação com o Google Drive: {e}")
+        error_msg = f"Erro na autenticação com o Google Drive: {e}"
+        print(error_msg)
+        logging.error(error_msg)
+        send_google_chat_notification(f"🚨 Erro na automação de horários: Falha na autenticação com o Google Drive. Verifique as credenciais. Detalhes: {e}")
         return None
-    
-# --- Função de Download do Arquivo Excel ---
 
 def download_excel_from_drive(service, file_id, destination_path):
+    """Baixa um arquivo do Google Drive."""
     try:
         request = service.files().get_media(fileId=file_id)
-        fh = io.FileIO(destination_path, 'wb')
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while done is False:
-            status, done = downloader.next_chunk()
-            print(f"Download: {int(status.progress() * 100)}%.")
+        with io.FileIO(destination_path, 'wb') as fh:
+            downloader = MediaIoBaseDownload(fh, request)
+            done = False
+            while not done:
+                status, done = downloader.next_chunk()
+                print(f"Download: {int(status.progress() * 100)}%.")
         print(f"Arquivo baixado para: {destination_path}")
+        logging.info(f"Arquivo baixado para: {destination_path}")
         return True
     except Exception as e:
-        enviar_mensagem_erro(f"Erro ao baixar o arquivo do Google Drive: {e}")
+        error_msg = f"Erro ao baixar o arquivo do Google Drive: {e}"
+        print(error_msg)
+        logging.error(error_msg)
+        send_google_chat_notification(f"🚨 Erro na automação de horários: Falha ao baixar a planilha. Detalhes: {e}")
         return False
 
-# --- Função de Comparação de Arquivos ---
-
-def files_are_different(file_path1, file_path2):
-    """
-    Compara dois arquivos XLSX calculando seus hashes SHA-256.
-    Retorna True se os arquivos forem diferentes, False se forem iguais.
-    """
-    if not os.path.exists(file_path1) or not os.path.exists(file_path2):
-        return True  # Se um dos arquivos não existe, considera como diferente
-
-    def calculate_file_hash(file_path):
-        sha256_hash = hashlib.sha256()
-        with open(file_path, 'rb') as f:
-            for byte_block in iter(lambda: f.read(4096), b""):
-                sha256_hash.update(byte_block)
-        return sha256_hash.hexdigest()
-
-    hash1 = calculate_file_hash(file_path1)
-    hash2 = calculate_file_hash(file_path2)
-    return hash1 != hash2
-
-# --- Função de Processamento de Dados ---
-
-def process_excel_sheet(sheet, sheet_name):
+def process_excel_sheet(sheet):
+    """Processa uma única aba da planilha para extrair os dados das salas."""
     all_room_data = []
-    sheet_data = []
-    for row in sheet.iter_rows(values_only=True):
-        # Garante que todas as células são strings e remove espaços em branco
-        sheet_data.append([str(cell if cell is not None else '').strip() for cell in row])
+    sheet_data = [[str(cell if cell is not None else '').strip() for cell in row] for row in sheet.iter_rows(values_only=True)]
 
     room_indices = [0, 16, 32, 48, 64, 80, 96, 112]
     current_room_name = None
     start_data_row = -1
 
     for i, row_values in enumerate(sheet_data):
-        line = ','.join(row_values)
-        for idx in room_indices:
-            if i == idx:
-                if " - SALA" in line:
-                    current_room_name = line.split(" - SALA")[1].strip().split(',')[0].strip()
-                    start_data_row = i + 2
-                break
-        else:
-            pass
+        if i in room_indices:
+            line = ','.join(row_values)
+            if " - SALA" in line:
+                current_room_name = line.split(" - SALA")[1].strip().split(',')[0].strip()
+                start_data_row = i + 2
 
-        if current_room_name and i >= start_data_row:
-            #if len(row_values) > 1 and any(cell for cell in row_values[1:]):
-                #time_str = row_values[0]
-            time_str = row_values[0]
-            if not time_str:
-                continue
+        if current_room_name and i >= start_data_row and row_values[0]:
             row_dict = {
-                "Horário": time_str,
+                "Horário": row_values[0],
                 "Segunda": row_values[1] if len(row_values) > 1 else "",
                 "Terça": row_values[2] if len(row_values) > 2 else "",
                 "Quarta": row_values[3] if len(row_values) > 3 else "",
@@ -137,112 +106,78 @@ def process_excel_sheet(sheet, sheet_name):
 
     return pd.DataFrame(all_room_data)
 
-# --- Formata CSV para um arquivo js que pode ser utilizado no DataTables ---
-
 def format_csv_to_js(csv_path, js_output_path):
-    import csv
+    """Converte o arquivo CSV para um array JavaScript."""
+    try:
+        df = pd.read_csv(csv_path).fillna('')
+        data_list = df.values.tolist()
+
+        with open(js_output_path, 'w', encoding='utf-8') as js_file:
+            js_file.write('var dados = [\n')
+            for i, row in enumerate(data_list):
+                formatted_row = ', '.join([f"'{str(item).replace('\'', '\\\'')}'" for item in row])
+                js_file.write(f"  [{formatted_row}]")
+                if i < len(data_list) - 1:
+                    js_file.write(',\n')
+                else:
+                    js_file.write('\n')
+            js_file.write('];\n')
+        print("Arquivo dados.js gerado com sucesso.")
+        logging.info("Arquivo dados.js gerado com sucesso.")
+    except Exception as e:
+        error_msg = f"Erro ao gerar o arquivo JS: {e}"
+        print(error_msg)
+        logging.error(error_msg)
+        send_google_chat_notification(f"🚨 Erro na automação de horários: Falha ao converter CSV para JS. Detalhes: {e}")
+
+def main():
+    """Função principal para orquestrar o processo."""
+    drive_service = authenticate_google_drive()
+    if not drive_service:
+        return
+
+    if not download_excel_from_drive(drive_service, FILE_ID, CURRENT_EXCEL_PATH):
+        return
 
     try:
-        dados = []
-        with open(csv_path, 'r', encoding='utf-8') as arquivo:
-            leitor_csv = csv.reader(arquivo)
-            for linha in leitor_csv:
-                dados.append(linha)
+        workbook = openpyxl.load_workbook(CURRENT_EXCEL_PATH)
+        combined_df = pd.DataFrame()
 
-        # Remove o cabeçalho
-        if len(dados) > 0:
-            dados = dados[1:]
+        for sheet_name in SHEET_NAMES:
+            if sheet_name in workbook.sheetnames:
+                print(f"Processando aba: {sheet_name}")
+                sheet = workbook[sheet_name]
+                df_sheet = process_excel_sheet(sheet)
+                combined_df = pd.concat([combined_df, df_sheet], ignore_index=True)
+            else:
+                logging.warning(f"Aba '{sheet_name}' não encontrada. Ignorando.")
 
-        with open(js_output_path, 'w', encoding='utf-8') as arquivo:
-            arquivo.write('var dados = [\n')
+        desired_columns = ["Horário", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Sala"]
+        combined_df = combined_df[desired_columns]
 
-            for i, linha in enumerate(dados):
-                elementos_formatados = []
-                for elemento in linha:
-                    elemento_escapado = str(elemento).replace("'", "\\'")
-                    elementos_formatados.append(f"'{elemento_escapado}'")
+        # Caminhos relativos à raiz do repositório
+        csv_output_path = os.path.join(BASE_DIR, 'Horarios_Salas_Combinados.csv')
+        js_output_path = os.path.join(BASE_DIR, '..', 'js', 'dados.js')
 
-                linha_formatada = '[' + ', '.join(elementos_formatados) + ']'
-                if i < len(dados) - 1:
-                    linha_formatada += ','
+        combined_df.to_csv(csv_output_path, index=False)
+        print(f"Dados combinados salvos em {csv_output_path}")
+        logging.info(f"Dados combinados salvos em {csv_output_path}")
 
-                arquivo.write(linha_formatada + '\n')
+        format_csv_to_js(csv_output_path, js_output_path)
 
-            arquivo.write('];\n')
-
-        print("Arquivo dados.js gerado com sucesso.")
+        send_google_chat_notification("✅ Horários da FCT atualizados com sucesso!")
 
     except Exception as e:
-        enviar_mensagem_erro(f"Erro ao gerar o arquivo JS: {e}")
+        error_msg = f"Erro ao processar o arquivo Excel: {e}"
+        print(error_msg)
+        logging.error(error_msg, exc_info=True)
+        send_google_chat_notification(f"🚨 Erro na automação de horários: Falha ao processar a planilha. Detalhes: {e}")
+    finally:
+        # Limpa o arquivo baixado
+        if os.path.exists(CURRENT_EXCEL_PATH):
+            os.remove(CURRENT_EXCEL_PATH)
+            print(f"Arquivo temporário '{CURRENT_EXCEL_PATH}' removido.")
 
-
-# --- Lógica Principal ---
 
 if __name__ == "__main__":
-    # 1. Autenticar com o Google Drive
-    drive_service = authenticate_google_drive()
-
-    if drive_service:
-        # 2. Baixar o novo arquivo Excel do Google Drive
-        if download_excel_from_drive(drive_service, FILE_ID, CURRENT_EXCEL_PATH):
-            # 3. Comparar com o arquivo antigo
-            if files_are_different(CURRENT_EXCEL_PATH, OLD_EXCEL_PATH):
-                print("Alterações detectadas. Processando o novo arquivo...")
-                combined_df = pd.DataFrame()
-
-                try:
-                    # 4. Carregar o arquivo Excel com openpyxl
-                    workbook = openpyxl.load_workbook(CURRENT_EXCEL_PATH)
-                    print(f"Arquivo Excel '{CURRENT_EXCEL_PATH}' carregado com sucesso.")
-
-                    # 5. Processar cada aba especificada
-                    for sheet_name in SHEET_NAMES:
-                        if sheet_name in workbook.sheetnames:
-                            sheet = workbook[sheet_name]
-                            print(f"Processando aba: {sheet_name}")
-                            df_sheet = process_excel_sheet(sheet, sheet_name)
-                            combined_df = pd.concat([combined_df, df_sheet], ignore_index=True)
-                        else:
-                            print(f"Aba '{sheet_name}' não encontrada no arquivo Excel. Ignorando.")
-
-                    # 6. Definir a ordem desejada das colunas
-                    desired_columns = ["Horário", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Sala"]
-                    existing_desired_columns = [col for col in desired_columns if col in combined_df.columns]
-                    combined_df = combined_df[existing_desired_columns]
-
-                    # 7. Salvar o DataFrame combinado em um arquivo CSV
-                    output_csv_file = "Horarios_Salas_Combinados.csv"
-                    combined_df.to_csv(output_csv_file, index=False)
-
-                    print(f"\nDados combinados salvos em {output_csv_file}")
-
-                    # 7.1. Gerar o arquivo dados.js a partir do CSV
-                    js_output_path = os.path.join('..', 'js', 'dados.js')
-                    format_csv_to_js(output_csv_file, js_output_path)
-                    
-                    js_filename = os.path.basename(js_output_path)
-                    github_js_path = f"js/{js_filename}"
-
-                    # Envia para o GitHub
-                    Send_to_Github.upload_to_github(output_csv_file, GITHUB_OWNER, GITHUB_REPO_NAME, GITHUB_BRANCH, 'utils/'+output_csv_file)
-                    Send_to_Github.upload_to_github(js_output_path, GITHUB_OWNER, GITHUB_REPO_NAME, GITHUB_BRANCH, github_js_path)
-
-                    # 8. Substituir o arquivo antigo pelo novo
-                    if os.path.exists(OLD_EXCEL_PATH):
-                        os.remove(OLD_EXCEL_PATH)
-                    os.rename(CURRENT_EXCEL_PATH, OLD_EXCEL_PATH)
-                    print(f"Arquivo antigo atualizado: {OLD_EXCEL_PATH}")
-
-                except Exception as e:
-                    enviar_mensagem_erro(f"Erro ao processar o arquivo Excel: {e}")
-                    # Não remove o arquivo baixado em caso de erro para evitar perda de dados
-            else:
-                print("Nenhuma alteração detectada. O script não será executado.")
-                # Remove o arquivo baixado, já que não houve alterações
-                if os.path.exists(CURRENT_EXCEL_PATH):
-                    os.remove(CURRENT_EXCEL_PATH)
-                    print(f"Arquivo temporário '{CURRENT_EXCEL_PATH}' removido.")
-        else:
-            enviar_mensagem_erro("Não foi possível baixar o arquivo Excel. O processamento foi interrompido.")
-    else:
-        enviar_mensagem_erro("Não foi possível autenticar com o Google Drive. O processamento foi interrompido.")
+    main()
