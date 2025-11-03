@@ -28,7 +28,7 @@ jobs:
 
       - name: 4. Criar arquivo de credenciais do Google
         # Usa um "secret" do GitHub para armazenar o conteúdo do service_account.json de forma segura
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > utils/service_account.json
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > utils/service_account.json
 
       - name: 5. Executar script de atualização
         # Passa o webhook do Google Chat como uma variável de ambiente para o script
