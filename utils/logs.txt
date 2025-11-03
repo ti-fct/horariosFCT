@@ -1,3 +1,7 @@
 2025-11-03 11:50:27,059 - ERROR - Erro na autenticação com o Google Drive: Expecting property name enclosed in double quotes: line 2 column 3 (char 4)
 2025-11-03 12:00:20,118 - ERROR - Erro na autenticação com o Google Drive: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
 2025-11-03 12:14:38,155 - ERROR - Erro na autenticação com o Google Drive: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2025-11-03 12:19:13,377 - INFO - Autenticação com o Google Drive bem-sucedida.
+2025-11-03 12:19:15,085 - INFO - Arquivo baixado para: /home/runner/work/horariosFCT/horariosFCT/utils/planilha_horarios.xlsx
+2025-11-03 12:19:15,724 - INFO - Dados combinados salvos em /home/runner/work/horariosFCT/horariosFCT/utils/Horarios_Salas_Combinados.csv
+2025-11-03 12:19:15,727 - INFO - Arquivo dados.js gerado com sucesso.
