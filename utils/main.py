@@ -140,7 +140,7 @@ def format_csv_to_js(csv_path, js_output_path):
         print(error_msg)
         logging.error(error_msg)
         send_google_chat_notification(f"🚨 Erro na automação de horários: Falha ao converter CSV para JS. Detalhes: {e}")
-        
+
 def main():
     """Função principal para orquestrar o processo."""
     drive_service = authenticate_google_drive()
@@ -176,7 +176,8 @@ def main():
 
         format_csv_to_js(csv_output_path, js_output_path)
 
-        send_google_chat_notification("✅ Horários da FCT atualizados com sucesso!")
+        # Habilitar caso queria notificar toda vez que o action rodar
+        # send_google_chat_notification("✅ Horários da FCT atualizados com sucesso!")
 
     except Exception as e:
         error_msg = f"Erro ao processar o arquivo Excel: {e}"
