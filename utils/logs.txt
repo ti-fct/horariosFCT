@@ -1,0 +1,1 @@
+2025-11-03 11:50:27,059 - ERROR - Erro na autenticação com o Google Drive: Expecting property name enclosed in double quotes: line 2 column 3 (char 4)
