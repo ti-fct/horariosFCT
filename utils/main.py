@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 CREDENTIALS_FILE = os.path.join(BASE_DIR, 'service_account.json')
 LOG_FILE = os.path.join(BASE_DIR, 'logs.txt')
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-FILE_ID = '1uc8XtB7lc-rBNVuNoTaBfpR6gsLsPIuk'
+FILE_ID = '1e_IzkPQpWmtdOUjCS8MBr_sP3Zghsqts'
 CURRENT_EXCEL_PATH = os.path.join(BASE_DIR, 'planilha_horarios.xlsx')
 
 # Obtenha o webhook do Google Chat das variáveis de ambiente
