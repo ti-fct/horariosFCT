@@ -738,3 +738,7 @@
 2026-05-07 11:49:07,873 - INFO - Arquivo baixado para: /home/runner/work/horariosFCT/horariosFCT/utils/planilha_horarios.xlsx
 2026-05-07 11:49:08,452 - INFO - Dados combinados salvos em /home/runner/work/horariosFCT/horariosFCT/utils/Horarios_Salas_Combinados.csv
 2026-05-07 11:49:08,455 - INFO - Arquivo dados.js gerado com sucesso.
+2026-05-08 11:18:47,532 - INFO - Autenticação com o Google Drive bem-sucedida.
+2026-05-08 11:18:48,285 - INFO - Arquivo baixado para: /home/runner/work/horariosFCT/horariosFCT/utils/planilha_horarios.xlsx
+2026-05-08 11:18:48,859 - INFO - Dados combinados salvos em /home/runner/work/horariosFCT/horariosFCT/utils/Horarios_Salas_Combinados.csv
+2026-05-08 11:18:48,862 - INFO - Arquivo dados.js gerado com sucesso.
