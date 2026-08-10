@@ -1110,3 +1110,9 @@
 2026-08-10 11:09:42,847 - INFO - Arquivo baixado para: /home/runner/work/horariosFCT/horariosFCT/utils/planilha_horarios.xlsx
 2026-08-10 11:09:43,423 - INFO - Dados combinados salvos em /home/runner/work/horariosFCT/horariosFCT/utils/Horarios_Salas_Combinados.csv
 2026-08-10 11:09:43,426 - INFO - Arquivo dados.js gerado com sucesso.
+2026-08-10 16:43:39,436 - ERROR - Erro na autenticação com o Google Drive: [Errno 2] No such file or directory: 'C:\\Users\\Cleidson\\Documents\\horariosFCT\\utils\\service_account.json'
+2026-08-10 16:43:39,438 - WARNING - Webhook do Google Chat não configurado.
+2026-08-10 16:46:30,075 - INFO - Autenticação com o Google Drive bem-sucedida.
+2026-08-10 16:46:34,158 - INFO - Arquivo baixado para: C:\Users\Cleidson\Documents\horariosFCT\utils\planilha_horarios.xlsx
+2026-08-10 16:46:37,294 - INFO - Dados combinados salvos em C:\Users\Cleidson\Documents\horariosFCT\utils\Horarios_Salas_Combinados.csv
+2026-08-10 16:46:37,338 - INFO - Arquivo dados.js gerado com sucesso.
