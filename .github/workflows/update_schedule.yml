@@ -42,7 +42,7 @@ jobs:
           git config --global user.email "actions@github.com"
           
           # Adiciona os arquivos que podem ser alterados
-          git add js/dados.js utils/Horarios_Salas_Combinados.csv utils/logs.txt
+          git add js/dados.js utils/Horarios_Salas_Combinados.csv
           
           # Faz o commit apenas se houver alterações
           git diff --staged --quiet || git commit -m "Atualização automática dos horários"
