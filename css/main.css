@@ -54,6 +54,11 @@ table.dataTable span.column_highlight {
     border-radius: 0.28571429rem;
 }
 
+table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+    text-align: left;
+    padding-right: 50px;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 0.5rem !important;
