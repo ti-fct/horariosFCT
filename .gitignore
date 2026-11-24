@@ -28,3 +28,8 @@ Thumbs.db
 # Sensitive information
 .env
 service_account.json
+
+#logs
+logs.txt
+utils/logs.txt
+utils/planilha_horarios.xlsx

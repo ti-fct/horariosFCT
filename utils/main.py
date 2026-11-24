@@ -20,7 +20,11 @@ CURRENT_EXCEL_PATH = os.path.join(BASE_DIR, 'planilha_horarios.xlsx')
 GOOGLE_CHAT_WEBHOOK_URL = os.environ.get('GOOGLE_CHAT_WEBHOOK')
 
 # Configuração do logging
-logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.FileHandler(LOG_FILE, encoding='utf-8'), logging.StreamHandler()],
+)
 
 SHEET_NAMES = [
     "MINI-AUDITORIOS", "SALAS", "LABS INF-DES FCT", "LABS MAT-GEO",
